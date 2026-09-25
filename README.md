@@ -67,22 +67,24 @@ Svaret skickas tillbaka på samma sätt, den omvända vägen.
 
 
 ## Moment B: Jämförande OS- och Behörighetsanalys
-- Sätta upp en identisk behörighetsstruktur i både Linux och Windows samt göra en djupgående jämförelse.
-- Dokumentera och analysera 
+- Beskrivning av företagscenariot och syftet med behörigheterna osv. 
 
+### Linux
+- Dokumentation av kommandon (groupadd, chown, chmod, setgid), samt resultat.
+
+### Windows
+- Dokumentation av kommandon (net ..., icacls), samt resultat. 
+
+### Test av kommandon
+- bob lyckas i "Gemensamt" men misslyckas i "Ledning"
+
+
+### Analys
+- Hur arv fungerar (L: POSIX & W: NTFS), jämförelsetabell
+- Flexibilitet i behörighetsmodeller (POSIX 3-nivåer och NTFS obegränsade)
+- Slutsats kring säkerhet och admin i operativsystemen. 
 
 ## Moment C: Spårbarhet & Överlämningsdokumentation
 Färdigställa en komplett system- och driftdokumentation för hela labbmiljön.
-
-Innehåll i dokumentationen:
-
-Nätverkskarta/topologi och IP-plan.
-
-Systemarkitektur och installerade tjänster.
-
-Instruktioner för återställning/backup (step-by-step).
-
-Länkar till konfigurationsskript i Git-repositoryt.
-
 
 INNAN INLÄMNING: "Kan en extern tekniker ta över och återställa miljön enbart utifrån detta dokument utan att behöva ställa frågor?"  
