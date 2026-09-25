@@ -1,31 +1,77 @@
-<<<<<<< HEAD
 # Individuell fördjupning - VG-uppgift
 
 Kurs: Introduktion till yrkesrollen och grunderna i IT-infrastruktur (MYH 2025/4008)
+
 Examinationsform: Individuell teknisk fördjupningsuppgift (Summativ examination)
-Av: Blossom Davis
+
+Av: Blossom Davis\
 Datum: 2026-10-02
 
-## Moment A: Avancerad Nätverksanalys &amp; Trafikflöden
+## Moment A: Avancerad Nätverksanalys & Trafikflöden
 Illustration av datatrafikflöde:
+
 ![text](länk)
 
 
 ### Vad händer - steg för steg
-1. a
-2. b
-3. c
-4. d
-5. e
+**1. DNS-uppslag**
 
-Tydliggör pakethuvuden, MAC-adresser, IP-adresser, Postnummer
+Klienten "Labb-miljö" vill nå hemsidan "Systementor.se". För att datorn ska veta att vi vill komma till systementor.se används: DNS-uppslag. 
+
+Datorn skickar en förfrågan till DNS-servern, även kallad Domain Name System som översätter sökningen 
+"systementor.se" till en publik IP-adress, som returneras till datorn. 
+
+**2. Destination och Gateway**
+
+Nu har datorn fått IP-adressen till målet, dock ligger IP-adressen utanför nätverket. För att kunna ta oss till det andra subnätet behövs det att data skickas genom 
+Standard Gateway (routern).
+
+Om datorn inte har MAC-adressen till routern  används ARP (adress resolution protocol), den hjälper datorn att hitta MAC-adressen som tillhör routerns IP-adress.
+
+**3. Inkapslingen (TCP/IP-modellen)**
+
+Nu byggs datapaketet ihop (uppifrån och ner) på klienten. 
+
+- **Applikations lagret** genererar datan - en förfrågan om att besöka systementor.se. 
+
+- **Transport lagret** lägger på en TCP-header med en slumpmässig (52431) källport och en mål port (443 för https). 
+
+*Applikations och Transport lagret skapar ett "segment".*
+
+- **Nätverks lagret** lägger på en IP-header med datorns lokal IP som källa och "systementor.se" publika IP som mål-destination. 
+
+*Segmentet och IP-header skapar ett "paket"*
+
+- **Länk lagret** kapslar in paketet i en "frame" där den lägger på sin egen MAC-adress som källa och routerns MAC-adress som mål-destination. 
+
+- **Fysiska lagret** omvandlar frame:n till elektriska signaler eller radiovågar (bits) och skickas genom kabeln eller luften. 
+
+*Den lila kopplingen symboliserar elektricitet genom kabel för att överföra bits.*
+
+**4. Lokal överföring**
+
+**4a. Switchen**\
+Switchen tar emot signalerna och läser destinationens MAC-adress och skickar vidare den till rätt port som leder till routern. 
+
+**4b. Routern**\
+Routern tar emot den och dekapslar frame-header och trailer för att visa paketet. Sedan läser den av destinationens (systementor.se) IP-adress i IP-header, för att veta vart den ska. 
+
+Routern byter ut datorns privata IP-adress till routerns publika IP-adress, via Network Adress Translation (NAT). Routern packar sedan in paketet i en ny frame justerad till nästa nätverk och skickar det vidare till internetleverantören (ISP).
+
+**5. Transport över Internet**\
+Men innan den har nått mål-destinationen så har den hoppat mellan ett flertal routrar över internet (BGP-protokollet). 
+
+Sedan när paketet når mål-destinationen passerar den brandväggar och en Load Balancer som dirigerar trafiken rätt. Målservern tar emot paketet, dekapslar paketet och hanterar TCP-handskakningen och förbereder ett svar.
+
+Svaret skickas tillbaka på samma sätt, den omvända vägen.
+
 
 ## Moment B: Jämförande OS- och Behörighetsanalys
 - Sätta upp en identisk behörighetsstruktur i både Linux och Windows samt göra en djupgående jämförelse.
 - Dokumentera och analysera 
 
 
-## Moment C: Spårbarhet &amp; Överlämningsdokumentation
+## Moment C: Spårbarhet & Överlämningsdokumentation
 Färdigställa en komplett system- och driftdokumentation för hela labbmiljön.
 
 Innehåll i dokumentationen:
@@ -39,50 +85,4 @@ Instruktioner för återställning/backup (step-by-step).
 Länkar till konfigurationsskript i Git-repositoryt.
 
 
-INNAN INLÄMNING: "Kan en extern tekniker ta över och återställa miljön enbart utifrån detta dokument utan att behöva ställa frågor?"
-=======
-# Individuell-f-rdjupning---VG-uppgift
-
-LILA: elektricitet genom kabel för att överföra bits
-
-1. Klienten "Labb-miljö" vill nå hemsidan "Systementor.se". För att datorn ska veta att vi vill komma till systementor.se används: DNS-uppslag. 
-
-Datorn skickar en förfrågan till DNS-servern, även kallad Domain Name System som översätter sökningen 
-"systementor.se" till en publik ip-adress, som returneras till datorn. 
-
-2. Nu har datorn fått ip-adressen till målet, dock ligger ip-adressen utanför nätverket. De är i olika LAN-nätverk ihopkopplade med olika routrar. För att nå hemsidan behöver meddelandet resa genom WAN genom routern. För att kunna ta oss ut på nätet behövs det att data skickas genom 
-Standard Gateway (även kallad router). 
-
-
-SWITCHEN läser destinationens mac-adress och skickar vidare den till routern. 
-
-
-Routern decapsulate frame:ns header och trailer för att visa packet. den läser sedan av destinationen "systementor.se". Och sedan placerar den i en ny frame till nästa LAN. 
-
-
-För att skicka datapacket mellan olika subnät används ARP (adress resolution protocol), 
-den hjälper datorn att hitta MAC-adressen (Hårdvaruadressen) som tillhör routerns ip-adress. 
-
-Nu kommer vi till enkapsuleringen (TCP/IP-modellen). Datorn har nu sänt iväg en förfrågan att besöka systementor.se. 
-
-Applikations lagret genererar datan och ett datapaket (http/https) sätts ihop av datorn. 
-
-För att kunna skicka iväg den genererade datan behöver datorn en transport väg. Transport lagret (TCP/UDP) lägger på en TCP-header med källport (en random?) och en mål port (443). 
-
-Applikations och Transport lagret skapar ett "segment". 
-
-Sedan kommer nätverkslagret (IP), här läggs det på en IP-header med källa och mål. IP:adresserna skapar då ett packet. 
-
-
-Data-link lager (Ethernet/Wi-Fi) denna del kapslar in allt i en frame med datorns MAC-adress
-som källa och routerns MAC-adress om mål. 
-
-Routing/NAT
-När paketet når den lokala routern så byter routern ut källans ip-adress mot den publika ip-adressen (och sparar kopplingen). Routern skickar paketet vidare till internetleverantörens (ISP) router.
-
-Men innan den har nått slutdestinationen så har den hoppat mellan ett flertal routrar över internet (BGP-protokollet). 
-
-Paketet når destinationen där de passerar brandväggar och (Load Balancer) som dirigerar trafiken rätt.Målservern tar emot paketet, dekapslar paketet och hanterar tcp-handskakningen och förbereder ett svar.
-
-Svaret skickas tillbaka den omvända vägen. 
->>>>>>> c4f8795 (började beskriva datatrafikflöde)
+INNAN INLÄMNING: "Kan en extern tekniker ta över och återställa miljön enbart utifrån detta dokument utan att behöva ställa frågor?"  
