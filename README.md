@@ -77,9 +77,23 @@ Svaret skickas tillbaka på samma sätt, den omvända vägen.
 
 
 ### Analys
-- Hur arv fungerar (L: POSIX & W: NTFS), jämförelsetabell
-- Flexibilitet i behörighetsmodeller (POSIX 3-nivåer och NTFS obegränsade)
-- Slutsats kring säkerhet och admin i operativsystemen. 
+*Jämförelsetabell:*
+
+
+| Linux | Windows |
+|----------|----------|
+| Enkel modell | Mer detaljerade inställningar för specifika användare/grupper. |
+| Tre nivåer: User, Group, Others. Tre rättigheter: Read, Write, Execute | Flexibel. Ingen strikt indelning. | 
+
+### Arv
+Windows (NTFS): använder arv som standard. När man skapar en fil så får filen automatiskt samma rättigheter som mappen den ligger i. Man kan ändra rättigheterna eller ta bort arvet. 
+
+Linux (POSIX): Använder inte automatiskt arv, utan "standard-rättigheter". Behörigheter sätts efter systemets standardmask - umask. Man kan ändra detta genom inställningen Set Group ID (SGID). 
+
+### Slutsats 
+**Linux** är mer förutsägbara och enkla i sin administration. User, Group och Others-strukturen gör det enkelt att se helheten och vem som har tillgång till vad. Dock blir det standardiserade arvet "osynligt", vilket gör det svårt att undvika misstag. Linux är stabil och lätt att använda men kräver mer manuell konfiguration med mer avancerade behörigheter. 
+
+**Windows** är mer flexibla och erbjuder att man ska kunna skräddarsy detaljerade listor med behörigheter. Det automatiska arvet gör det enklare för stora organisationer att konfigurera. Flexibiliteten kan dock göra det mer utmanande med säkerheten med "labyrinter" och överlappande arv. 
 
 ## Moment C: Spårbarhet & Överlämningsdokumentation
 Färdigställa en komplett system- och driftdokumentation för hela labbmiljön.
