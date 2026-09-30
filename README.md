@@ -90,8 +90,9 @@ Svaret skickas tillbaka på samma sätt, den omvända vägen.
 
 | Linux | Windows |
 |----------|----------|
-| Enkel modell | Mer detaljerade inställningar för specifika användare/grupper. |
-| Tre nivåer: User, Group, Others. Tre rättigheter: Read, Write, Execute | Flexibel. Ingen strikt indelning. | 
+| Enkel modell. | Mer detaljerade inställningar för specifika användare/grupper. |
+| Tre nivåer: User, Group, Others. | Ingen strikt indelning. |
+| Tre rättigheter: Read, Write, Execute. | Flexibel. |
 
 ### Arv
 Windows (NTFS): använder arv som standard. När man skapar en fil så får filen automatiskt samma rättigheter som mappen den ligger i. Man kan ändra rättigheterna eller ta bort arvet. 
