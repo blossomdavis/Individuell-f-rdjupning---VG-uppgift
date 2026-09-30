@@ -69,12 +69,20 @@ Svaret skickas tillbaka på samma sätt, den omvända vägen.
 ### Linux
 - Dokumentation av kommandon (groupadd, chown, chmod, setgid), samt resultat.
 
+```
+```
+
 ### Windows
 - Dokumentation av kommandon (net ..., icacls), samt resultat. 
+
+```
+```
 
 ### Test av kommandon
 - bob lyckas i "Gemensamt" men misslyckas i "Ledning"
 
+```
+```
 
 ### Analys
 *Jämförelsetabell:*
@@ -96,6 +104,4 @@ Linux (POSIX): Använder inte automatiskt arv, utan "standard-rättigheter". Beh
 **Windows** är mer flexibla och erbjuder att man ska kunna skräddarsy detaljerade listor med behörigheter. Det automatiska arvet gör det enklare för stora organisationer att konfigurera. Flexibiliteten kan dock göra det mer utmanande med säkerheten med "labyrinter" och överlappande arv. 
 
 ## Moment C: Spårbarhet & Överlämningsdokumentation
-Färdigställa en komplett system- och driftdokumentation för hela labbmiljön.
-
-INNAN INLÄMNING: "Kan en extern tekniker ta över och återställa miljön enbart utifrån detta dokument utan att behöva ställa frågor?"  
+INNAN INLÄMNING - "Kan en extern tekniker ta över och återställa miljön enbart utifrån detta dokument utan att behöva ställa frågor?"  
