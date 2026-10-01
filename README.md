@@ -113,12 +113,13 @@ sudo chmod 770 /Projekt/Ledning
 ```
 ![alt text](image-24.png)
 
-Egentligen kan en mapp bara ägas en grupp. Så för att g_ledare och g_personal ska ha tillgång till /Projekt/Gemensamt lägger jag till alice i gruppens g_personal. 
+Egentligen kan en mapp bara ägas av en grupp. Så för att g_ledare och g_personal ska ha tillgång till /Projekt/Gemensamt lägger jag till alice i gruppens g_personal. 
 
 ```
 sudo usermod -aG g-personal alice
 ```
-- flaggan -a och -G ???
+-a = lägger till användaren i gruppen utan att ta bort användaren från andra grupper som den redan tillhör\
+-G = betonar att det är en sekundär grupp som den avser
 
 ![alt text](image-25.png)
 
@@ -144,7 +145,7 @@ sudo chmod 2770 /Projekt/Gemensamt
 
 ![alt text](image-27.png)
 
-**Ger även arv till mappen /Projekt/Ledning**
+Arv till mappen /Projekt/Ledning
 ```
 sudo chmod 2770 /Projekt/Ledning
 ```
@@ -154,15 +155,15 @@ sudo chmod 2770 /Projekt/Ledning
 #### alice testar /Projekt/Gemensamt
 ![alt text](image-31.png)
 
-#### alice testar /Projekt/Ledning
+**alice testar /Projekt/Ledning**
 
 ![alt text](image-32.png)
 
-#### bob testar /Projekt/Gemensamt
+**bob testar /Projekt/Gemensamt**
 
 ![alt text](image-33.png)
 
-#### bob testar /Projekt/Ledning
+**bob testar /Projekt/Ledning**
 
 ![alt text](image-34.png)
 
@@ -183,6 +184,7 @@ New-LocalUser -Name "bob"
 ```
 ![alt text](image-37.png)
 
+Lägger till alice och bob som medlemmar i grupperna.
 ```
 Add-LocalGroupMember -Group "g_ledare" -Member "alice"
 Add-LocalGroupMember -Group "g_personal" -Member "bob"
@@ -192,22 +194,19 @@ Add-LocalGroupMember -Group "g_personal" -Member "bob"
 #### Steg 3 - Skapa mappstruktur
 ```
 New-Item -Path "C:\Projekt\Gemensamt" -ItemType Directory -Force
-
 New-Item -Path "C:\Projekt\Ledning" -ItemType Directory -Force
 ```
 ![alt text](image-39.png)
 
-#### Steg 4 - Konfigurera NTFS behörigheter
+#### Steg 4 - Konfigurera NTFS behörigheter och hantera arv (inheritance)
 Nu vill vi ta bort/stänga av arvet från mappen, så inte vanliga användare får läsrättigheter av misstag. 
-
-"Stäng av arv och ta bort ärvda rättigheter"
 
 ```
 icacls "C:\Projekt\Gemensamt" /inheritance:r
 ```
 ![alt text](image-40.png)
 
-"Ge admin och system full åtkomst"
+Detta ger admin och system full åtkomst. 
 ```
 icacls "C:\Projekt\Gemensamt --% /grant:r "Administratörer:(OI)(CI)F"
 
@@ -217,7 +216,7 @@ icacls "C:\Projekt\Gemensamt --% /grant:r "SYSTEM:(OI)(CI)F"
 
 ![alt text](image-42.png)
 
-"Ge personal och ledare, läsa och skriva "
+Ger personal och ledare behörigheter att läsa och skriva.
 
 ```
 icacls "C:\Projekt\Gemensamt --% /grant:r "g_personal:(OI)(CI)M"
@@ -228,29 +227,22 @@ icacls "C:\Projekt\Gemensamt --% /grant:r "g_ledare:(OI)(CI)M"
 ![alt text](image-43.png)
 
 
-"Mappen /Projekt/Ledning ska tillåta g_ledare men ska neka g_personal"
+Tillåter mappen /Projekt/Ledning gruppen g_ledare men nekar gruppen g_personal. 
 
 ![alt text](image-44.png)
 
-"eftersom vi rensade ärvda rättigheter och inte gav g_personal någon behörighet, blir g_personal automatiskt nekade, utan en deny-regel."
+Eftersom jag stoppade ärvda rättigheter och inte gav g_personal någon behörighet, blir g_personal automatiskt nekade, utan en deny-regel.
 
-#### Steg 5 - Hantera arv (inheritance)
-
-```
-
-```
-
+Översikt av behörigheter:
 ![alt text](image-45.png)
 
 #### Steg 6 - Testa och verifiera
-```
-alice testar att skapa filer
-```
+**alice testar att skapa filer**
+
 ![alt text](image-46.png)
 
-```
-bob testar att lista och skapa filer (ÅTKOMST NEKAD)
-```
+**bob testar att lista och skapa filer (ÅTKOMST NEKAD)**
+
 ![alt text](image-47.png)
 
 
@@ -273,6 +265,3 @@ Linux (POSIX): Använder inte automatiskt arv, utan "standard-rättigheter". Beh
 **Linux** är mer förutsägbara och enkla i sin administration. User, Group och Others-strukturen gör det enkelt att se helheten och vem som har tillgång till vad. Dock blir det standardiserade arvet "osynligt", vilket gör det svårt att undvika misstag. Linux är stabil och lätt att använda men kräver mer manuell konfiguration med mer avancerade behörigheter. 
 
 **Windows** är mer flexibla och erbjuder att man ska kunna skräddarsy detaljerade listor med behörigheter. Det automatiska arvet gör det enklare för stora organisationer att konfigurera. Flexibiliteten kan dock göra det mer utmanande med säkerheten med "labyrinter" och överlappande arv. 
-
-## Moment C: Spårbarhet & Överlämningsdokumentation
-INNAN INLÄMNING - "Kan en extern tekniker ta över och återställa miljön enbart utifrån detta dokument utan att behöva ställa frågor?"  
