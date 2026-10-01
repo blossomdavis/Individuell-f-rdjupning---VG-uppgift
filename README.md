@@ -64,22 +64,60 @@ Svaret skickas tillbaka på samma sätt, den omvända vägen.
 
 
 ## Moment B: Jämförande OS- och Behörighetsanalys
-- Beskrivning av företagscenariot och syftet med behörigheterna osv. 
+*Dokumentation av ett företagscenario där syftet är att sätta behörigheter i två olika OS, med anledning av tex Least Privilege Principle.* 
 
 ### Linux
-- Dokumentation av kommandon (chown, chmod, setgid), samt resultat.
+- Dokumentation av kommandon steg för steg (tex chown, chmod, setgid), samt resultat.
 
+#### Steg 1 - Skapa grupper
 ```
 sudo groupadd g_ledare
 sudo groupadd g_personal
 ```
+- sudo - ger administratörsrättigheter
+
+![alt text](image-20.png)
+
+#### Steg 2 - Skapa användare
+```
+sudo useradd -m -g g_ledare alice
+sudo useradd -m -g g_personal bob
+```
+
+-m = skapar automatiskt en hemkatalog\
+-g = sätter användarens primära grupp
+
+![alt text](image-21.png)
+
+#### Lösenord för båda användarna
+```
+sudo passwd alice
+sudo passwd bob
+```
+![alt text](image-22.png)
+
+#### Steg 3 - Skapa mappstruktur
+```
+sudo mkdir -p /Projekt/Gemensamt /Projekt/Ledning
+```
+-p = skapar alla mappar (även om de inte finns) utan felmeddelande
+
+#### Steg 4 - Konfigurera ägarskap och POSIX-behörigheter för båda mapparna
+
+För mappen Ledning vill vi att gruppen g_ledare äger mappen och har fulla rättigheter, medan övriga saknar rättigheter helt. 
+
+```
+sudo 
+```
+
+
+#### Steg 5 - Hantera arv (automatiskt)
+
+#### Steg 6 - Testa och verifiera (tillträde och filskapande)
+
 
 ![alt text](image-1.png)
 
-```
-sudo adduser alice
-sudo adduser bob
-```
 ![alt text](image-2.png)
 
 ```
