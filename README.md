@@ -67,8 +67,6 @@ Svaret skickas tillbaka på samma sätt, den omvända vägen.
 *Dokumentation av ett företagscenario där syftet är att sätta behörigheter i två olika OS, med anledning av tex Least Privilege Principle.* 
 
 ### Linux
-- Dokumentation av kommandon steg för steg (tex chown, chmod, setgid), samt resultat.
-
 #### Steg 1 - Skapa grupper
 ```
 sudo groupadd g_ledare
@@ -170,6 +168,93 @@ sudo chmod 2770 /Projekt/Ledning
 
 
 ### Windows
+#### Steg 1 - Skapa grupper
+```
+New-LocalGroup -Name "g_ledare"
+New-LocalGroup -Name "g_personal"
+```
+
+![alt text](image-35.png)
+
+#### Steg 2 - Skapa användare
+```
+New-LocalUser -Name "alice"
+New-LocalUser -Name "bob"
+```
+![alt text](image-37.png)
+
+```
+Add-LocalGroupMember -Group "g_ledare" -Member "alice"
+Add-LocalGroupMember -Group "g_personal" -Member "bob"
+```
+![alt text](image-38.png)
+
+#### Steg 3 - Skapa mappstruktur
+```
+New-Item -Path "C:\Projekt\Gemensamt" -ItemType Directory -Force
+
+New-Item -Path "C:\Projekt\Ledning" -ItemType Directory -Force
+```
+![alt text](image-39.png)
+
+#### Steg 4 - Konfigurera NTFS behörigheter
+Nu vill vi ta bort/stänga av arvet från mappen, så inte vanliga användare får läsrättigheter av misstag. 
+
+"Stäng av arv och ta bort ärvda rättigheter"
+
+```
+icacls "C:\Projekt\Gemensamt" /inheritance:r
+```
+![alt text](image-40.png)
+
+"Ge admin och system full åtkomst"
+```
+icacls "C:\Projekt\Gemensamt --% /grant:r "Administratörer:(OI)(CI)F"
+
+icacls "C:\Projekt\Gemensamt --% /grant:r "SYSTEM:(OI)(CI)F"
+```
+![alt text](image-41.png)
+
+![alt text](image-42.png)
+
+"Ge personal och ledare, läsa och skriva "
+
+```
+icacls "C:\Projekt\Gemensamt --% /grant:r "g_personal:(OI)(CI)M"
+
+icacls "C:\Projekt\Gemensamt --% /grant:r "g_ledare:(OI)(CI)M"
+```
+
+![alt text](image-43.png)
+
+
+"Mappen /Projekt/Ledning ska tillåta g_ledare men ska neka g_personal"
+
+![alt text](image-44.png)
+
+"eftersom vi rensade ärvda rättigheter och inte gav g_personal någon behörighet, blir g_personal automatiskt nekade, utan en deny-regel."
+
+#### Steg 5 - Hantera arv (inheritance)
+
+```
+
+```
+
+![alt text](image-45.png)
+
+#### Steg 6 - Testa och verifiera
+```
+alice testar att skapa filer
+```
+![alt text](image-46.png)
+
+```
+bob testar att lista och skapa filer (ÅTKOMST NEKAD)
+```
+![alt text](image-47.png)
+
+
+### Äldre dokumentation
 - Dokumentation av kommandon (net ..., icacls), samt resultat. 
 
 ![alt text](image-13.png)
@@ -221,7 +306,7 @@ bryt arvet ...
 ![alt text](image-18.png)
 
 ```
-...
+icacls "C:\Projekt\Ledning" /inheritance:d
 ```
 
 ![alt text](image-19.png)
