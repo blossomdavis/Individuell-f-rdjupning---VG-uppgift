@@ -117,7 +117,62 @@ så att nya filer automatiskt ärver g_personal
 ### Windows
 - Dokumentation av kommandon (net ..., icacls), samt resultat. 
 
+![alt text](image-13.png)
+
 ```
+New-LocalGroup -Name "g_ledare"
+New-LocalGroup -Name "g_personal"
+```
+
+![alt text](image-14.png)
+
+```
+New-LocalUser -Name "bob"
+New-LocalUser -Name "alice"
+```
+
+![alt text](image-15.png)
+
+```
+Add-LocalGroupMember -Group "g_ledare" -Member "alice"
+
+Add-LocalGroupMember -Group "g_personal" -Member "bob"
+```
+
+
+```
+New-Item -Path "C:\Projekt\Gemensamt" -ItemType Directory -Force
+
+New-Item -Path "C:\Projekt\Ledning" -ItemType Directory -Force
+```
+
+![alt text](image-16.png)
+
+
+Nu vill vi ta bort arvet från mappen "Projekt" så inte vanliga användare får läsrättigheter. 
+
+"Ge ledare och personal behörigheter att "Modify"."
+
+!['alt text'](image-17.png)
+
+
+```
+icacls "C:\Projekt\Gemensamt /grant "g_ledare:(OI)(CI)M"
+
+icacls "C:\Projekt\Gemensamt /grant "g_personal:(OI)(CI)M"
+```
+
+bryt arvet ...
+![alt text](image-18.png)
+
+```
+...
+```
+
+![alt text](image-19.png)
+
+```
+...
 ```
 
 ### Test av kommandon
