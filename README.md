@@ -6,6 +6,8 @@ Examinationsform: Individuell teknisk fördjupningsuppgift (Summativ examination
 
 Av: Blossom Davis
 Datum: 2026-10-02
+
+Trevlig läsning!
 ```
 
 ## Moment A: Avancerad Nätverksanalys & Trafikflöden
@@ -234,6 +236,8 @@ Tillåter mappen /Projekt/Ledning gruppen g_ledare men nekar gruppen g_personal.
 Eftersom jag stoppade ärvda rättigheter och inte gav g_personal någon behörighet, blir g_personal automatiskt nekade, utan en deny-regel.
 
 Översikt av behörigheter:
+
+
 ![alt text](image-45.png)
 
 #### Steg 6 - Testa och verifiera
