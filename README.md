@@ -153,10 +153,20 @@ sudo chmod 2770 /Projekt/Ledning
 ![alt text](image-29.png)
 
 #### Steg 6 - Testa och verifiera (tillträde och filskapande)
-
+#### alice testar /Projekt/Gemensamt
 ![alt text](image-31.png)
 
+#### alice testar /Projekt/Ledning
 
+![alt text](image-32.png)
+
+#### bob testar /Projekt/Gemensamt
+
+![alt text](image-33.png)
+
+#### bob testar /Projekt/Ledning
+
+![alt text](image-34.png)
 
 ## Nästa del
 
