@@ -168,43 +168,6 @@ sudo chmod 2770 /Projekt/Ledning
 
 ![alt text](image-34.png)
 
-## Nästa del
-
-![alt text](image-1.png)
-
-![alt text](image-2.png)
-
-```
-sudo usermod -aG g_ledare alice
-```
-
-![alt text](image-6.png)
-
-![alt text](image-3.png)
-*- Vad betyder a och G?*
-
-```
-sudo usermod -aG g_personal bob
-```
-![alt text](image-4.png)
-
-```
-sudo chown :g_personal Projekt/Gemensamt
-sudo chown :g_ledare Projekt/Ledning
-```
-: berättar att det är gruppen vi ändrar
-
-![alt text](image-7.png)
-
-```
-sudo chmod 770 Projekt/Gemensamt
-sudo chmod g+s Projekt/Gemensamt
-```
-![alt text](image-8.png)
-
-så att nya filer automatiskt ärver g_personal 
-
-![alt text](image-9.png)
 
 ### Windows
 - Dokumentation av kommandon (net ..., icacls), samt resultat. 
@@ -263,22 +226,6 @@ bryt arvet ...
 
 ![alt text](image-19.png)
 
-```
-...
-```
-
-### Test av kommandon
-- bob lyckas i "Gemensamt" men misslyckas i "Ledning"
-
-![alt text](image-12.png)
-
-![alt text](image-11.png)
-
-```
-Permission denied
-```
-Alice och bob kunde skriva i dokumentet: 
-![alt text](image-10.png)
 
 ### Analys
 *Jämförelsetabell:*
