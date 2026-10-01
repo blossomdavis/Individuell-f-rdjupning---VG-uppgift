@@ -102,19 +102,63 @@ sudo mkdir -p /Projekt/Gemensamt /Projekt/Ledning
 ```
 -p = skapar alla mappar (även om de inte finns) utan felmeddelande
 
+![alt text](image-23.png)
+
 #### Steg 4 - Konfigurera ägarskap och POSIX-behörigheter för båda mapparna
 
 För mappen Ledning vill vi att gruppen g_ledare äger mappen och har fulla rättigheter, medan övriga saknar rättigheter helt. 
 
 ```
-sudo 
+sudo chown root:g_ledare /Projekt/Ledning
+
+sudo chmod 770 /Projekt/Ledning
+```
+![alt text](image-24.png)
+
+Egentligen kan en mapp bara ägas en grupp. Så för att g_ledare och g_personal ska ha tillgång till /Projekt/Gemensamt lägger jag till alice i gruppens g_personal. 
+
+```
+sudo usermod -aG g-personal alice
+```
+- flaggan -a och -G ???
+
+![alt text](image-25.png)
+
+Sedan för mappen Gemensamt vill vi att gruppen g_personal äger mappen och har fulla rättigheter, medan övriga saknar rättigheter helt. 
+
+```
+sudo chown root:g_personal /Projekt/Gemensamt
+
+sudo chmod 770 /Projekt/Gemensamt
 ```
 
+![alt text](image-26.png)
 
 #### Steg 5 - Hantera arv (automatiskt)
 
+Dock blir frågan vem som kommer bli grupp/ägare när alice skapar en fil i Gemensamt. För att lösa detta kan man använda SGID-biten (Set Group ID). Då kommer alla nya filer som skapas i mappen automatiskt att ärva mappens gruppägare, oavsett vem som skapar filen.  
+
+```
+sudo chmod 2770 /Projekt/Gemensamt
+```
+
+2 = aktiverar SGID-biten på mappen
+
+![alt text](image-27.png)
+
+**Ger även arv till mappen /Projekt/Ledning**
+```
+sudo chmod 2770 /Projekt/Ledning
+```
+![alt text](image-29.png)
+
 #### Steg 6 - Testa och verifiera (tillträde och filskapande)
 
+![alt text](image-31.png)
+
+
+
+## Nästa del
 
 ![alt text](image-1.png)
 
